@@ -1,0 +1,32 @@
+BLOCK 'chyba Excel'
+ON BLOCK ERROR
+    GOTO 'ukoncen neuspesne'
+END
+    Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\Student\\Desktop\\paut_data\\power_query.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+    MouseAndKeyboard.MoveMouseToImage.ClickImage Images: [imgrepo['menuData']] SearchForImageOn: MouseAndKeyboard.SearchTarget.EntireScreen MousePositionOnImage: MouseAndKeyboard.PositionOnImage.MiddleCenter OffsetX: 0 OffsetY: 0 Tolerance: 10 MovementStyle: MouseAndKeyboard.MovementStyle.Instant Occurence: 1 Timeout: 5 ClickType: MouseAndKeyboard.ClickType.LeftClick SecondsBeforeClick: 0 SearchAlgorithm: MouseAndKeyboard.ImageFinderAlgorithm.Legacy X=> X Y=> Y
+    ON ERROR REPEAT 1 TIMES WAIT 1
+    END
+    MouseAndKeyboard.MoveMouseToImage.ClickImage Images: [imgrepo['menu Aktualizovat']] SearchForImageOn: MouseAndKeyboard.SearchTarget.EntireScreen MousePositionOnImage: MouseAndKeyboard.PositionOnImage.MiddleCenter OffsetX: 0 OffsetY: 0 Tolerance: 10 MovementStyle: MouseAndKeyboard.MovementStyle.Instant Occurence: 1 Timeout: 5 ClickType: MouseAndKeyboard.ClickType.LeftClick SecondsBeforeClick: 0 SearchAlgorithm: MouseAndKeyboard.ImageFinderAlgorithm.Legacy X=> X2 Y=> Y2
+    ON ERROR REPEAT 1 TIMES WAIT 1
+    END
+    WAIT 5
+    Excel.CloseExcel.CloseAndSave Instance: ExcelInstance
+    ON ERROR REPEAT 1 TIMES WAIT 1
+    END
+    EXIT Code: 0
+END
+LABEL 'ukoncen neuspesne'
+Display.ShowMessageDialog.ShowMessage Message: $'''Tok ukončen neúspěšně''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+EXIT Code: 0 ErrorMessage: $'''Chyba Excel'''
+
+# [ControlRepository][PowerAutomateDesktop]
+
+{
+  "ControlRepositorySymbols": [],
+  "ImageRepositorySymbol": {
+    "Repository": "{\r\n  \"Folders\": [],\r\n  \"Images\": [\r\n    {\r\n      \"Id\": \"601c7404-7f98-4911-96e0-3871e921ae14\",\r\n      \"Name\": \"menuData\",\r\n      \"Screenshot\": \"iVBORw0KGgoAAAANSUhEUgAAACsAAAAWCAYAAABZuWWzAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADcSURBVEhL7ZLhCcIwEIUdJlvYMdQpqjuIOIOgKwjFGQTBOfpDcInKEy48Y3KJwaCF/Pho7u6l/Ugzud/6YSxU2VJU2VJU2VIkyRpj3rhezt6sj0/zIZJl+WOH/e7Zw5NzIX4qCyDaNNOXGjkBNfZwbzGfBbPyHo1sWbe/Wra2LzK+HNCyGl+T1WZaDsTmQrYsau7jtFAzMuN1LKuRLbvdrO0dPHVHuxZ4D69jWY0sWYhyD/eOBdw51pBMyWokyzLuyQD0ZO4KyG+XfVpWI0n2X6iypaiypRiRbD88AMIh6qkjZP2DAAAAAElFTkSuQmCC\",\r\n      \"ScreenshotPath\": \"imageRepo-screenshots\\\\34cebf37-4bbb-4134-abcb-8d990580716b.png\"\r\n    },\r\n    {\r\n      \"Id\": \"eef02b94-2ae8-489e-87cb-8745b1472abb\",\r\n      \"Name\": \"menu Aktualizovat\",\r\n      \"Screenshot\": \"iVBORw0KGgoAAAANSUhEUgAAACgAAAApCAYAAABHomvIAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGASURBVFhH7Za/SsNQFId9mLyD0skncCkIUpy7OvoUDu0kgos6WERwcHUrOLm4ZXGQuLsmIUe+kFtKyW3u37RIPvjRJjlJP849SXMge84g6Eun4Gh05JRQGAnukv8lqJbPNIvFY3OmO9aCeZ4bhdrJ5MxbMqpglmXeklEF+fSVjC5IfCR7ESSukr0JEhfJqILbYko0wW0ZBG1TFIWUZbnKfD5rrthNVEFkqqpqznYjiiAdU2LXHw8yfb2Uw9uTVdhmvwnBBZXc29dSxk9TOX+5kPvPZ/n+/amvwSfb7Oc4dYB4G8EFldzx3WlnlzhOHfW9CDJzQGdMl/Dq/aau70WQ7iHG8tlAfXRBZg+4AZixLhDaTBvBBNXyMlPqhghBcMHQ7IUgHafzbQQXNJ2tdZhZZreNKIIud7HusdQpuI6poM1zkDrqdVgL6qLeUBB0+SfRYSVogpo5fpTOsHwm/8U6ggtuQpeivs3smkHQl0HQl0HQl2CCSZJImqZ11Hd/RP4A82ALnYONDe0AAAAASUVORK5CYII=\",\r\n      \"ScreenshotPath\": \"imageRepo-screenshots\\\\c99b27c7-a328-4ff0-a08a-da2343171cfd.png\"\r\n    }\r\n  ],\r\n  \"Version\": 1\r\n}",
+    "ImportMetadata": {},
+    "Name": "imgrepo"
+  },
+  "ConnectionReferences": []
+}
