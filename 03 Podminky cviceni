@@ -1,0 +1,12 @@
+IF (Folder.IfFolderExists.Exists Path: cestaSlozky) THEN
+ELSE
+    Display.ShowMessageDialog.ShowMessage Message: $'''Složka nenalezena, ukončuji tok''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+    EXIT Code: 0 ErrorMessage: $'''Složka nenalezena: %cestaSlozky%'''
+END
+Folder.GetFiles Folder: cestaSlozky FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+**REGION definice proměnných
+SET pocetSouboru TO Files.Count
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> CurrentDateTime
+**ENDREGION
+File.WriteText File: $'''C:\\Users\\Student\\Desktop\\log_docasny.txt''' TextToWrite: $'''%CurrentDateTime% pocet souboru: %pocetSouboru%''' AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.Unicode
+File.WriteText File: $'''C:\\Users\\Student\\Desktop\\log_trvaly.txt''' TextToWrite: $'''%CurrentDateTime% pocet souboru: %pocetSouboru%''' AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.Unicode
