@@ -1,0 +1,20 @@
+BLOCK Excel
+ON BLOCK ERROR
+GOTO chybaExcel
+END
+    Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\Student\\Desktop\\menicka.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+    Excel.ReadFromExcel.ReadAllCells Instance: ExcelInstance ReadAsText: False FirstLineIsHeader: False RangeValue=> ExcelData
+    Excel.CloseExcel.Close Instance: ExcelInstance
+END
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://www.google.cz''' WindowState: WebAutomation.BrowserWindowState.Maximized ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 PiPUserDataFolderMode: WebAutomation.PiPUserDataFolderModeEnum.AutomaticProfile TargetDesktop: $'''{\"DisplayName\":\"Místní počítač\",\"Route\":{\"ServerType\":\"Local\",\"ServerAddress\":\"\"},\"DesktopType\":\"local\"}''' BrowserInstance=> Browser
+LOOP FOREACH CurrentItem IN ExcelData
+    Text.CropText.CropTextBetweenFlags Text: CurrentItem FromFlag: $'''.cz/''' ToFlag: $'''.''' IgnoreCase: False CroppedText=> CroppedText IsFlagFound=> IsFlagFound
+    WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: CurrentItem WaitForPageToLoadTimeout: 60
+    WebAutomation.GetDetailsOfWebPage BrowserInstance: Browser DetailsType: WebAutomation.DetailsType.Text Details=> WebPageProperty
+    File.WriteText File: $'''C:\\Users\\Student\\Desktop\\%CroppedText%.txt''' TextToWrite: WebPageProperty AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.Unicode
+END
+WebAutomation.CloseWebBrowser BrowserInstance: Browser
+EXIT Code: 0
+LABEL chybaExcel
+Display.ShowMessageDialog.ShowMessage Message: $'''Tok ukončen neúspěšně - chyba Excel''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+EXIT Code: 0 ErrorMessage: $'''Chyba Excel'''
