@@ -1,0 +1,14 @@
+Folder.GetFiles Folder: $'''C:\\Users\\Student\\Desktop\\pdf_soubory''' FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+Pdf.MergeFiles PDFFiles: Files MergedPDFPath: $'''C:\\Users\\Student\\Desktop\\pdf_vse.pdf''' IfFileExists: Pdf.IfFileExists.Overwrite PasswordDelimiter: $''',''' MergedPDF=> MergedPDF
+Pdf.ExtractTablesFromPDF.ExtractTablesFromPage PDFFile: MergedPDF PageNumber: 1 MultiPageTables: True SetFirstRowAsHeader: True ExtractedPDFTables=> ExtractedPDFTables
+LOOP FOREACH CurrentItem IN ExtractedPDFTables
+    SET tabulka TO CurrentItem.DataTable
+    LOOP LoopIndex FROM 0 TO tabulka.RowsCount - 1 STEP 1
+        SET radek TO tabulka[LoopIndex]
+        SET mesto TO radek['Město']
+        IF mesto = $'''Loket''' THEN
+            SET pocetObyvatel TO radek['Počet obyvatel']
+            EXIT LOOP
+        END
+    END
+END
