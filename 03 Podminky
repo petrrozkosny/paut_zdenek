@@ -1,0 +1,33 @@
+Folder.GetFiles Folder: $'''C:\\Users\\Student\\Desktop\\paut_data''' FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+DISABLE SET pocetSouboru TO Files.Count
+DISABLE IF pocetSouboru > 0 THEN
+    DISABLE Display.ShowMessageDialog.ShowMessage Message: $'''Soubory nalezeny!''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+DISABLE ELSE
+    DISABLE Display.ShowMessageDialog.ShowMessage Message: $'''Souborx nenalezeny''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed2
+    DISABLE EXIT Code: 0
+DISABLE END
+DISABLE LOOP FOREACH CurrentItem IN Files
+    DISABLE SET nazevSouboru TO CurrentItem.Name
+DISABLE END
+**REGION definice promennych
+SET pocetCsv TO 0
+SET pocetPdf TO 0
+SET pocetXlsx TO 0
+SET pocetOstatni TO 0
+**ENDREGION
+LOOP FOREACH CurrentItem IN Files
+    SET typSouboru TO CurrentItem.Extension
+    SWITCH typSouboru
+        CASE = $'''.csv'''
+            Variables.IncreaseVariable Value: pocetCsv IncrementValue: 1
+        CASE = $'''.pdf'''
+            Variables.IncreaseVariable Value: pocetPdf IncrementValue: 1
+            EXIT LOOP
+        CASE = $'''.xlsx'''
+            NEXT LOOP
+            Variables.IncreaseVariable Value: pocetXlsx IncrementValue: 1
+        DEFAULT
+            Variables.IncreaseVariable Value: pocetOstatni IncrementValue: 1
+    END
+END
+Display.ShowMessageDialog.ShowMessage Message: $'''Dokončeno!''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
