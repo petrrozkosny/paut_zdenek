@@ -1,0 +1,16 @@
+SET posledniIterace TO $'''FALSE'''
+WebAutomation.LaunchEdge.LaunchEdge Url: $'''https://www.menicka.cz''' WindowState: WebAutomation.BrowserWindowState.Maximized ClearCache: False ClearCookies: False WaitForPageToLoadTimeout: 60 Timeout: 60 PiPUserDataFolderMode: WebAutomation.PiPUserDataFolderModeEnum.AutomaticProfile TargetDesktop: $'''{\"DisplayName\":\"Místní počítač\",\"Route\":{\"ServerType\":\"Local\",\"ServerAddress\":\"\"},\"DesktopType\":\"local\"}''' BrowserInstance=> Browser
+SET url TO $'''https://www.menicka.cz/praha-10.html'''
+LABEL 'analyzuj url'
+WebAutomation.GoToWebPage.GoToWebPage BrowserInstance: Browser Url: url WaitForPageToLoadTimeout: 60
+WebAutomation.GetDetailsOfWebPage BrowserInstance: Browser DetailsType: WebAutomation.DetailsType.Text Details=> WebPageProperty
+Text.ParseText.ParseForFirstOccurrence Text: WebPageProperty TextToFind: $'''řÝzek''' StartingPosition: 0 IgnoreCase: True OccurrencePosition=> Position
+IF (Position = -1 AND posledniIterace = False) = $'''TRUE''' THEN
+    SET url TO $'''https://www.menicka.cz/praha-9.html'''
+    SET posledniIterace TO $'''TRUE'''
+    GOTO 'analyzuj url'
+ELSE IF (Position = -1 AND posledniIterace = True) = $'''TRUE''' THEN
+    Display.ShowMessageDialog.ShowMessage Message: $'''Řízek nenalezen''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+ELSE
+    EXIT Code: 0
+END
