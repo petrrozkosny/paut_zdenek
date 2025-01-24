@@ -1,0 +1,12 @@
+IF (Folder.IfFolderExists.DoesNotExist Path: slozka) THEN
+    EXIT Code: 0
+END
+Folder.GetFiles Folder: slozka FileFilter: $'''*%koncovka%''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+SET pocetSouboru TO Files.Count
+Display.ShowMessageDialog.ShowMessage Message: $'''Počet nalezených souborů %pocetSouboru%.
+Zapsat do logu?''' Icon: Display.Icon.Question Buttons: Display.Buttons.YesNo DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+IF ButtonPressed = $'''Ano''' THEN
+    @@flowname: 'zapis log'
+External.RunFlow FlowId: 'e1290281-dd28-4da6-9b04-75acdb787bfb' WaitToComplete: True @zprava: pocetSouboru
+END
+EXIT Code: 0
