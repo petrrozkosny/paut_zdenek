@@ -1,0 +1,20 @@
+Folder.GetFiles Folder: $'''C:\\Users\\Student\\Downloads''' FileFilter: $'''*zip''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+IF Files.Count = 0 THEN
+    EXIT Code: 0
+END
+LOOP FOREACH CurrentItem IN Files
+    Compression.UnzipFiles ArchivePath: CurrentItem.FullName DestinationFolder: $'''C:\\Users\\Student\\Downloads'''
+    Folder.GetFiles Folder: $'''C:\\Users\\Student\\Downloads\\%CurrentItem.NameWithoutExtension%''' FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files2
+    SET pocetPdf TO 0
+    SET pocetCsv TO 0
+    LOOP FOREACH CurrentItem2 IN Files2
+        SWITCH CurrentItem2
+            CASE EndsWith($'''csv''', False)
+                Variables.IncreaseVariable Value: pocetCsv IncrementValue: 1
+            CASE EndsWith($'''pdf''', False)
+                Variables.IncreaseVariable Value: pocetPdf IncrementValue: 1
+        END
+    END
+    Display.ShowMessageDialog.ShowMessage Message: $'''Pocet nalezenych PDF %pocetPdf%
+Pocet nalezenych CSV %pocetCsv%''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+END
