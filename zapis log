@@ -1,0 +1,4 @@
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> CurrentDateTime
+SET nazevSouboru TO $'''log.txt'''
+File.WriteText File: $'''C:\\Users\\Student\\Desktop\\%nazevSouboru%''' TextToWrite: $'''%CurrentDateTime%: %zprava%''' AppendNewLine: True IfFileExists: File.IfFileExists.Append Encoding: File.FileEncoding.Unicode
+EXIT Code: 0
