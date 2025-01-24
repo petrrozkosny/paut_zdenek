@@ -1,0 +1,22 @@
+DISABLE Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\Student\\Desktop\\paut_data\\akcie.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+DISABLE Excel.ReadFromExcel.ReadAllCells Instance: ExcelInstance ReadAsText: False FirstLineIsHeader: False RangeValue=> ExcelData
+DISABLE Excel.CloseExcel.Close Instance: ExcelInstance
+DISABLE Excel.LaunchExcel.LaunchUnderExistingProcess Visible: True Instance=> ExcelInstance
+DISABLE Excel.WriteToExcel.Write Instance: ExcelInstance Value: ExcelData
+DISABLE Excel.CloseExcel.CloseAndSaveAs Instance: ExcelInstance DocumentFormat: Excel.ExcelFormat.FromExtension DocumentPath: $'''C:\\Users\\Student\\Desktop\\akcie2.xlsx'''
+**REGION Excel akcie.xlsx
+Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\Student\\Desktop\\paut_data\\akcie.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance2
+Excel.GetFirstFreeRowOnColumn Instance: ExcelInstance2 Column: 1 FirstFreeRowOnColumn=> FirstFreeRowOnColumn
+Excel.CloseExcel.Close Instance: ExcelInstance2
+**ENDREGION
+**REGION Excel log.xlsx
+IF (File.IfFile.Exists File: $'''C:\\Users\\Student\\Desktop\\log.xlsx''') THEN
+    Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\Student\\Desktop\\log.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+ELSE
+    Excel.LaunchExcel.LaunchUnderExistingProcess Visible: True Instance=> ExcelInstance
+END
+Excel.GetFirstFreeRowOnColumn Instance: ExcelInstance Column: 1 FirstFreeRowOnColumn=> FirstFreeRowOnColumn2
+Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: FirstFreeRowOnColumn - 2 Column: 1 Row: FirstFreeRowOnColumn2
+Excel.CloseExcel.CloseAndSaveAs Instance: ExcelInstance DocumentFormat: Excel.ExcelFormat.FromExtension DocumentPath: $'''C:\\Users\\Student\\Desktop\\log.xlsx'''
+**ENDREGION
+EXIT Code: 0
