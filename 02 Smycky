@@ -1,0 +1,14 @@
+Folder.GetFiles Folder: $'''C:\\Users\\Student\\Desktop\\paut_data''' FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: False SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+DISABLE LOOP FOREACH CurrentItem IN Files
+    DISABLE SET nazev TO CurrentItem.Name
+    DISABLE SET datumVytvoreni TO CurrentItem.CreationTime
+DISABLE END
+SET pocetSouboru TO Files.Count
+DISABLE LOOP LoopIndex FROM 0 TO pocetSouboru - 1 STEP 1
+    DISABLE SET aktualniSoubor TO Files[LoopIndex]
+DISABLE END
+SET indexSoubor TO 0
+LOOP WHILE (indexSoubor) < (pocetSouboru)
+    SET aktualniSoubor TO Files[indexSoubor]
+    Variables.IncreaseVariable Value: indexSoubor IncrementValue: 1
+END
