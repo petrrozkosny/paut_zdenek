@@ -1,0 +1,8 @@
+SET slozka TO $'''C:\\Users\\Student\\Desktop\\paut_data'''
+Folder.GetFiles Folder: slozka FileFilter: $'''*pdf''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+SET pocetSouboru TO Files.Count
+LOOP FOREACH CurrentItem IN Files
+    SET nazevSouboru TO CurrentItem.Name
+END
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> CurrentDateTime
+Display.ShowMessageDialog.ShowMessage Message: $'''%CurrentDateTime% načteno %pocetSouboru%''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False
