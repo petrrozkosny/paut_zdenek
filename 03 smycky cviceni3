@@ -1,0 +1,12 @@
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> zacatekDatumCas
+IF (Folder.IfFolderExists.DoesNotExist Path: $'''C:\\Users\\Student\\Desktop\\pdf_soubory''') THEN
+    Folder.Create FolderPath: $'''C:\\Users\\Student\\Desktop''' FolderName: $'''pdf_soubory''' Folder=> NewFolder
+END
+Folder.GetFiles Folder: $'''C:\\Users\\Student\\Desktop\\paut_data''' FileFilter: $'''*pdf''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+IF Files.Count = 0 THEN
+    EXIT Code: 0
+END
+File.Move Files: Files Destination: NewFolder IfFileExists: File.IfExists.DoNothing
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> konecDatumCas
+DateTime.Subtract FromDate: konecDatumCas SubstractDate: zacatekDatumCas TimeUnit: DateTime.DifferenceTimeUnit.Seconds TimeDifference=> TimeDifference
+File.WriteText File: $'''C:\\Users\\Student\\Desktop\\log.txt''' TextToWrite: $'''%konecDatumCas%, presunuto souboru: %Files.Count%, doba behu toku: %TimeDifference% sekund''' AppendNewLine: True IfFileExists: File.IfFileExists.Overwrite Encoding: File.FileEncoding.Unicode
