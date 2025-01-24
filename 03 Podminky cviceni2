@@ -1,0 +1,9 @@
+Folder.GetFiles Folder: $'''C:\\Users\\Student\\Desktop\\paut_data''' FileFilter: $'''*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.NoSort SortDescending1: False SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+LOOP FOREACH CurrentItem IN Files
+    IF Contains(CurrentItem.Name, soubor, False) THEN
+        Display.ShowMessageDialog.ShowMessage Message: $'''Soubor nalezen''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed
+        EXIT Code: 0
+    END
+END
+Display.ShowMessageDialog.ShowMessage Message: $'''Soubor nenalezen''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False ButtonPressed=> ButtonPressed2
+EXIT Code: 0
