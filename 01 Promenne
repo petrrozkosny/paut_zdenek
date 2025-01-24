@@ -1,0 +1,8 @@
+# Nastavujeme promennou uzivatel, datovy typ si urci Power Automate
+SET uzivatel TO $'''Petr'''
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateAndTime CurrentDateTime=> CurrentDateTime
+Display.ShowMessageDialog.ShowMessage Message: $'''Dobry den, uzivateli %uzivatel%,
+do mesta %mesto%, aktualni datum a cas %CurrentDateTime%''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False
+SET uzivatel TO $'''Zdenek'''
+Display.ShowMessageDialog.ShowMessage Message: $'''Dobry den, uzivateli %uzivatel%,
+do mesta %mesto%, aktualni datum a cas %CurrentDateTime%''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False
