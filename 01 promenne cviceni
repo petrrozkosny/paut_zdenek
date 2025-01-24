@@ -1,0 +1,3 @@
+DateTime.GetCurrentDateTime.Local DateTimeFormat: DateTime.DateTimeFormat.DateOnly CurrentDateTime=> CurrentDateTime
+SET mesto TO $'''Praha'''
+Display.ShowMessageDialog.ShowMessage Message: $'''Dobrý den, uživateli %uzivatel%, aktuální datum v město %mesto% je %CurrentDateTime.Day%.%CurrentDateTime.Month%.%CurrentDateTime.Year%''' Icon: Display.Icon.None Buttons: Display.Buttons.OK DefaultButton: Display.DefaultButton.Button1 IsTopMost: False
